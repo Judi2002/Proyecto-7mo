@@ -1,0 +1,1232 @@
+//Este codigo tiene a los canisters como blanco, cian, magenta, Amarillo y negro con los numeros 1, 2, 3, 4 y 5 respectivamente
+//Botones 3 - 13
+ const int BTN0 = 3;
+ const int BTN1 = 4;
+ const int BTN2 = 5;
+ const int BTN3 = 6;
+ const int BTN4 = 7;
+ const int BTN5 = 8;
+ const int BTN6 = 9;
+ const int BTN7 = 10;
+ const int BTN8 = 11;
+ const int BTN9 = 12;
+ const int BTNReset = 13;
+
+//Motores A0-A2
+ const int MotorMezcladora = A0;	
+ const int MotorAgitacion = A1;
+ const int MotorCC = A2; //motor de corriente continua del disco
+
+//Bombas de los canisters A3 - A7
+ const int BombaCanisterB = A3; //Canister blanco
+ const int BombaCanisterC = A4; //Canister cian
+ const int BombaCanisterM = A5; //Canister magenta
+ const int BombaCanisterA = A6; //Canister Amarillo
+ const int BombaCanisterN = A7; //Canister negro
+
+ const int SensorIR = 14;
+
+
+//EstadosBTN
+ int EstadoBTN0 = 0;
+ int EstadoBTN1 = 0;
+ int EstadoBTN2 = 0;
+ int EstadoBTN3 = 0;
+ int EstadoBTN4 = 0;
+ int EstadoBTN5 = 0;
+ int EstadoBTN6 = 0;
+ int EstadoBTN7 = 0;
+ int EstadoBTN8 = 0;
+ int EstadoBTN9 = 0;
+ 
+//Variables auxiliares
+ int Digito1 = 10;
+ int Digito2 = 10;
+ int Digito3 = 10;
+ int DetectorDeRecipiente = 1;
+ int ConfirmacionTapaRecipiente = 1;
+ int Aclarecer = 1;
+ int ConfirmacionAclarecer = 1;
+ int Oscurecer = 1;
+ int ConfirmacionOscurecer = 1;
+ int ConfirmacionSegundaMezcla = 1;
+ int SegundaMezcla = 1;
+
+void setup() {  
+	Serial.begin(9600);
+	pinMode(MotorAgitacion, OUTPUT);
+	pinMode(MotorCC, OUTPUT);
+	pinMode(SensorIR, INPUT);
+	pinMode(MotorMezcladora, OUTPUT);
+
+	//pinModeBTN
+	pinMode(BTN0, INPUT);
+	pinMode(BTN1, INPUT);
+	pinMode(BTN2, INPUT);
+	pinMode(BTN3, INPUT);
+	pinMode(BTN4, INPUT);
+	pinMode(BTN5, INPUT);
+	pinMode(BTN6, INPUT);
+	pinMode(BTN7, INPUT);
+	pinMode(BTN8, INPUT);
+	pinMode(BTN9, INPUT);
+	attachInterrupt(digitalPinToInterrupt(BTNReset), Reset, RISING);
+
+}
+
+//Los codigos de los colores dependen de 3 digitos (Digito1, Digito2 y Digito3)
+void loop() {
+	Serial.println("Ingrese su color:");
+
+	while(Digito1 == 10){		
+		Digito1f ();
+	}
+
+	while(Digito2 == 10){
+		Digito2f ();	
+	}
+	
+	while(Digito3 == 10){
+		Digito3f ();
+	}
+	}
+
+	//Amarillo y Magenta
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 0){ //Amarillo
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura el recipiente Amarillo?");
+				if(digitalRead(PantallaTactil) == si){
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delaMagenta(500);
+			CanisterAmarillo ();
+			delay(100);
+			CanisterAmarillo ();
+			delay(100);
+			CanisterAmarillo ();
+			delay(100);
+			CanisterAmarillo ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 1){ //Naranja
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura los recipientes magenta y Amarillo?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterMagenta (); 
+			delay(100);
+			CanisterAmarillo ();
+			delay(100);
+			CanisterAmarillo ();
+			delay(100);
+			CanisterAmarillo ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 2){ //Rojo 
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura los recipientes magenta y Amarillo?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterMagenta(); 
+			delay(100);
+			CanisterMagenta(); 
+			delay(100);
+			CanisterAmarillo ();
+			delay(100);
+			CanisterAmarillo ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 3){ //Fucsia
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura los recipientes magenta y Amarillo?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterMagenta (); 
+			delay(100);
+			CanisterMagenta (); 
+			delay(100);
+			CanisterMagenta (); 
+			delay(100);
+			CanisterAmarillo ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+
+	//Magenta y Cian0
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 4){ //Magenta
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura el recipiente magenta?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterMagenta (); 
+			delay(100);
+			CanisterMagenta (); 
+			delay(100);
+			CanisterMagenta (); 
+			delay(100);
+			CanisterMagenta (); 
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 5){ //Violeta amagentado
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura los recipientes cian y magenta?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterCian (); 
+			delay(100);
+			CanisterMagenta ();
+			delay(100);
+			CanisterMagenta ();
+			delay(100);
+			CanisterMagenta ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 6){ //Violeta
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura los recipientes cian y magenta?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterCian (); 
+			delay(100);
+			CanisterCian (); 
+			delay(100);
+			CanisterMagenta ();
+			delay(100);
+			CanisterMagenta ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 7){ //Azul
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura los recipientes cian y magenta?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterCian (); 
+			delay(100);
+			CanisterCian (); 
+			delay(100);
+			CanisterCian (); 
+			delay(100);
+			CanisterMagenta ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+
+	//Cian y Amarillo 
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 8){ //Cian
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura el recipiente de cian?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterCian (); 
+			delay(100);
+			CanisterCian (); 
+			delay(100);
+			CanisterCian (); 
+			delay(100);
+			CanisterCian (); 
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+	while(Digito1 = 0 && Digito2 = 0 && Digito3= 9){ //Verde marino
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura los recipientes cian y Amarillo?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterCian (); 
+			delay(100);
+			CanisterCian (); 
+			delay(100);
+			CanisterCian (); 
+			delay(100);
+			CanisterAmarillo ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+	while(Digito1 = 0 && Digito2 = 1 && Digito3= 0){ //Verde
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura los recipientes cian y Amarillo?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterCian (); 
+			delay(100);
+			CanisterCian (); 
+			delay(100);
+			CanisterAmarillo ();
+			delay(100);
+			CanisterAmarillo ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+	while(Digito1 = 0 && Digito2 = 1 && Digito3= 1){ //Verde amarillento
+		if(digitalRead(SensorIR) == HIGH){
+			SerialPrintln("Se detecto un recipiente");
+			while(DetectorDeRecipiente != 0){
+				SerialPrintln("¿Poseen pintura los recipientes cian y Amarillo?");
+				if(digitalRead(PantallaTactil) == si)
+					SerialPrintln("Realizando color");
+					DetectorDeRecipiente = 0;
+			}	
+			delay(500);
+			CanisterCian (); 
+			delay(100);
+			CanisterAmarillo ();
+			delay(100);
+			CanisterAmarillo ();
+			delay(100);
+			CanisterAmarillo ();
+			delay(500);
+		//Confirmacion de tapa
+			while(ConfirmacionTapaRecipiente != 0){
+				SerialPrintln("Ingrese la tapa del recipiente");
+				SerialPrintln("¿Ya la ingreso?");
+				if(digitalRead(PantallaTactil) == si) {
+					Mezcladora ();
+					ConfirmacionTapaRecipiente = 0;
+				}
+			}
+		//Confirmacion de aclarecer		
+			if (Aclarecer != 0){
+				aclarecer ();
+			}
+		//Confimacion de oscurecer
+			if(Oscurecer != 0){
+				oscurecer ();
+			}
+			while(ConfirmacionSegundaMezcla != 0){
+				SerialPrintln("¿Desea mezclar mas el color?")
+				if(digitalRead(PantallaTactil) == si){
+					SegundaMezcla = 1;
+					while(SegundaMezcla != 0){
+						SerialPrintln("Ingrese la tapa del recipiente");
+						SerialPrintln("¿Ya la ingreso?");
+						if(digitalRead(PantallaTactil) == si) {
+							Mezcladora ();
+							SegundaMezcla = 0;
+				}else{
+					if(digitalRead(PantallaTactil) == no){
+						ConfirmacionSegundaMezcla = 0;
+						delay(500);
+						SerialPrintln("¡Su color esta finalizado!");
+						Amarillo = 10;
+						Magenta = 10;
+						Cian = 10;
+							}
+						}
+					}
+				}
+			}
+		} 	
+	}
+
+
+}
+
+void Reset (){
+	Digito1 = 10;
+	Digito2 = 10;
+	Digito3 = 10;
+}
+
+void Digito1f(){
+
+	if(digitalRead(BTN0) == HIGH){
+			EstadoBTN0 = 1;
+		}
+
+	if(digitalRead(BTN1) == HIGH){
+			EstadoBTN1 = 1;
+		}
+
+	if(digitalRead(BTN2) == HIGH){
+			EstadoBTN2 = 1;
+		}
+
+	if(digitalRead(BTN3) == HIGH){
+			EstadoBTN3 = 1;
+		}
+
+	if(digitalRead(BTN4) == HIGH){
+			EstadoBTN4 = 1;
+		}
+
+	if(digitalRead(BTN5) == HIGH){
+			EstadoBTN5 = 1;
+		}
+
+	if(digitalRead(BTN6) == HIGH){
+			EstadoBTN6 = 1;
+		}
+
+	if(digitalRead(BTN7) == HIGH){
+			EstadoBTN7 = 1;
+		}
+
+	if(digitalRead(BTN8) == HIGH){
+			EstadoBTN8 = 1;
+		}
+
+	if(digitalRead(BTN9) == HIGH){
+			EstadoBTN9 = 1;
+		}
+
+	if(EstadoBTN0 == 1){
+		Amarillo = 0;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN0 = 0;
+	}
+	else if(EstadoBTN1 == 1){
+		Amarillo = 1;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN1 = 0;
+	}
+	else if(EstadoBTN2 == 1){
+		Amarillo = 2;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN2 = 0;
+	}
+	else if(EstadoBTN3 == 1){
+		Amarillo = 3;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN3 = 0;
+	}
+	else if(EstadoBTN4 == 1){
+		Amarillo = 4;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN4 = 0;
+	}
+	else if(EstadoBTN5 == 1){
+		Amarillo = 5;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN5 = 0;
+	}
+	else if(EstadoBTN6 == 1){
+		Amarillo = 6;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN6 = 0;
+	}
+	else if(EstadoBTN7 == 1){
+		Amarillo = 7;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN7 = 0;
+	}
+	else if(EstadoBTN8 == 1){
+		Amarillo = 8;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN8 = 0;
+	}
+	else if(EstadoBTN9 == 1){
+		Amarillo = 9;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN9 = 0;
+	}
+}
+
+void Digito2f (){
+
+	if(digitalRead(BTN0) == HIGH){
+			EstadoBTN0 = 1;
+		}
+
+	if(digitalRead(BTN1) == HIGH){
+			EstadoBTN1 = 1;
+		}
+
+	if(digitalRead(BTN2) == HIGH){
+			EstadoBTN2 = 1;
+		}
+
+	if(digitalRead(BTN3) == HIGH){
+			EstadoBTN3 = 1;
+		}
+
+	if(digitalRead(BTN4) == HIGH){
+			EstadoBTN4 = 1;
+		}
+
+	if(digitalRead(BTN5) == HIGH){
+			EstadoBTN5 = 1;
+		}
+
+	if(digitalRead(BTN6) == HIGH){
+			EstadoBTN6 = 1;
+		}
+
+	if(digitalRead(BTN7) == HIGH){
+			EstadoBTN7 = 1;
+		}
+
+	if(digitalRead(BTN8) == HIGH){
+			EstadoBTN8 = 1;
+		}
+
+	if(digitalRead(BTN9) == HIGH){
+			EstadoBTN9 = 1;
+		}
+
+	if(EstadoBTN0 == 1){
+		Magenta = 0;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN0 = 0;
+	}
+	else if(EstadoBTN1 == 1){
+		Magenta = 1;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN1 = 0;
+	}
+	else if(EstadoBTN2 == 1){
+		Magenta = 2;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN2 = 0;
+	}
+	else if(EstadoBTN3 == 1){
+		Magenta = 3;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN3 = 0;
+	}
+	else if(EstadoBTN4 == 1){
+		Magenta = 4;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN4 = 0;
+	}
+	else if(EstadoBTN5 == 1){
+		Magenta = 5;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN5 = 0;
+	}
+	else if(EstadoBTN6 == 1){
+		Magenta = 6;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN6 = 0;
+	}
+	else if(EstadoBTN7 == 1){
+		Magenta = 7;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN7 = 0;
+	}
+	else if(EstadoBTN8 == 1){
+		Magenta = 8;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN8 = 0;
+	}
+	else if(EstadoBTN9 == 1){
+		Magenta = 9;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN9 = 0;
+	}
+}
+
+void Digito3f (){
+
+	if(digitalRead(BTN0) == HIGH){
+			EstadoBTN0 = 1;
+		}
+
+	if(digitalRead(BTN1) == HIGH){
+			EstadoBTN1 = 1;
+		}
+
+	if(digitalRead(BTN2) == HIGH){
+			EstadoBTN2 = 1;
+		}
+
+	if(digitalRead(BTN3) == HIGH){
+			EstadoBTN3 = 1;
+		}
+
+	if(digitalRead(BTN4) == HIGH){
+			EstadoBTN4 = 1;
+		}
+
+	if(digitalRead(BTN5) == HIGH){
+			EstadoBTN5 = 1;
+		}
+
+	if(digitalRead(BTN6) == HIGH){
+			EstadoBTN6 = 1;
+		}
+
+	if(digitalRead(BTN7) == HIGH){
+			EstadoBTN7 = 1;
+		}
+
+	if(digitalRead(BTN8) == HIGH){
+			EstadoBTN8 = 1;
+		}
+
+	if(digitalRead(BTN9) == HIGH){
+			EstadoBTN9 = 1;
+		}
+		
+	if(EstadoBTN0 == 1){
+		Cian = 0;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN0 = 0;
+	}
+	else if(EstadoBTN1 == 1){
+		Cian = 1;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN1 = 0;
+	}
+	else if(EstadoBTN2 == 1){
+		Cian = 2;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN2 = 0;
+	}
+	else if(EstadoBTN3 == 1){
+		Cian = 3;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN3 = 0;
+	}
+	else if(EstadoBTN4 == 1){
+		Cian = 4;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN4 = 0;
+	}
+	else if(EstadoBTN5 == 1){
+		Cian = 5;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN5 = 0;
+	}
+	else if(EstadoBTN6 == 1){
+		Cian = 6;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN6 = 0;
+	}
+	else if(EstadoBTN7 == 1){
+		Cian = 7;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN7 = 0;
+	}
+	else if(EstadoBTN8 == 1){
+		Cian = 8;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN8 = 0;
+	}
+	else if(EstadoBTN9 == 1){
+		Cian = 9;
+		Serial.println(Amarillo, Magenta, Cian);
+		EstadoBTN9 = 0;
+	}	
+}
+
+void CanisterCian (){
+	analoglWrite(MotorCC, HIGH); //Se mueve el motor para que se posicione el canister
+	delay(500);
+	analoglWrite(MotorCC, LOW); //Se apaga el motor para que tire la pintura
+	delay(500);
+	digitalWrite(BombaCanisterC, HIGH); //Se prende la bomba del color
+	delay(500);
+	digitalWrite(BombaCanisterC, LOW); //Se apaga la bomba del color
+	delay(500);
+	digitalWrite(MotorCC, HIGH); //Se posiciona en punto muerto
+	delay(500);
+	digitalWrite(MotorCC, LOW);
+	delay(500);
+} 
+void CanisterMagenta (){
+	analoglWrite(MotorCC, HIGH); //Se mueve el motor para que se posicione el canister
+	delay(500);
+	analoglWrite(MotorCC, LOW); //Se apaga el motor para que tire la pintura
+	Delay(500);
+	digitalWrite(BombaCanisterM, HIGH); //Se prende la bomba del color
+	delay(500);
+	digitalWrite(BombaCanisterM, LOW); //Se apaga la bomba del color
+	delay(500);
+	digitalWrite(MotorCC, HIGH); //Se posiciona en punto muerto
+	delay(500);
+	digitalWrite(MotorCC, LOW);
+	delay(500);
+} 
+void CanisterAmarillo (){
+	analoglWrite(MotorCC, HIGH); //Se mueve el motor para que se posicione el canister
+	delay(500);
+	analoglWrite(MotorCC, LOW); //Se apaga el motor para que tire la pintura
+	delay(500);
+	digitalWrite(BombaCanisterA, HIGH); //Se prende la bomba del color
+	delay(500);
+	digitalWrite(BombaCanisterA, LOW); //Se apaga la bomba del color
+	delay(500);
+	digitalWrite(MotorCC, HIGH); //Se posiciona en punto muerto
+	delay(500);
+	digitalWrite(MotorCC, LOW);
+	delay(500);
+} 
+void CanisterBlanco (){
+	analoglWrite(MotorCC, HIGH); //Se mueve el motor para que se posicione el canister
+	delay(500);
+	analoglWrite(MotorCC, LOW); //Se apaga el motor para que tire la pintura
+	delay(500):
+	digitalWrite(BombaCanisterB, HIGH); //Se prende la bomba del color
+	delay(500);
+	digitalWrite(BombaCanisterB, LOW); //Se apaga la bomba del color
+	delay(500);
+}
+void CanisterNegro () {
+	analoglWrite(MotorCC, HIGH); //Se mueve el motor para que se posicione el canister
+	delay(500);
+	analoglWrite(MotorCC, LOW); //Se apaga el motor para que tire la pintura
+	delay(500):
+	digitalWrite(BombaCanisterN, HIGH); //Se prende la bomba del color
+	delay(500);
+	digitalWrite(BombaCanisterN, LOW); //Se apaga la bomba del color
+	delay(500);	
+}
+
+void Mezcladora (){
+	SerialPrintln("Mezclando pintura...")
+	digitalWrite(MotorMezcladora, HIGH);
+	delay(500);
+	digitalWrite(MotorMezcladora, LOW);
+	delay(500);
+}
+
+void aclarecer (){
+	while(Aclarecer != 0){
+		SerialPrintln("Desea aclarar el color?");
+		if(digitalRead(PantallaTactil) == si){
+			ConfirmacionAclarecer = 0;
+			CanisterBlanco ();
+			delay(500);
+			SerialPrintln("Ingrese la tapa del recipiente");
+			SerialPrintln("¿Ya la ingreso?");
+			while(ConfirmacionAclarecer == 0){
+			if(digitalRead(PantallaTactil) == si) {
+				Mezcladora ();
+				ConfirmacionAclarecer = 1;
+			}
+		}
+		}else{
+			if(digitalRead(PantallaTactil) == no){ //ARREFLAR
+				digitalWrite(MotorCC, HIGH); //Se posiciona en punto muerto
+				delay(500);
+				digitalWrite(MotorCC, LOW) ;
+				delay(500);
+				Aclarecer = 0;
+			}
+		}
+	}
+}
+
+void oscurecer (){
+	while(Oscurecer != 0){
+		SerialPrintln("¿Desea oscurecer el color?");
+		if(digitalRead(PantallaTactil) == si){
+			ConfirmacionOscurecer = 0;
+			CanisterNegro ();
+			delay(500);
+			SerialPrintln("Ingrese la tapa del recipiente");
+			SerialPrintln("¿Ya la ingreso?");
+			while(ConfirmacionOscurecer == 0)
+			if(digitalRead(PantallaTactil) == si) {
+				Mezcladora ();
+			}
+		}else{
+			if(digitalRead(PantallaTactil) == no){
+				digitalWrite(MotorCC, HIGH); //Se posiciona en punto muerto
+				delay(500);
+				digitalWrite(MotorCC, LOW);
+				delay(500);
+				Oscurecer = 0;
+			}
+		}
+	}
+}
